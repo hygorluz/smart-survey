@@ -1,7 +1,9 @@
 ## GIT IGNORED FILES
 
 # IDE settings
-.idea
+idea
+awcache
+vscode
 
 # Ignore production settings
 settings/*.secret
@@ -20,9 +22,10 @@ venv/
 
 # Temp files
 .DS_Store
+npm-debug.log
 
 # Service files
-.coverage
+coverage
 coverage.xml
 
 # Uvicorn/FastAPI PID file
@@ -33,8 +36,9 @@ tmp.sh
 /*.csv
 
 # Node
-.node_modules/
-views/package-lock.json
+node_modules
+yarn
+nyc_output
 
 # Gunicorn
 gunicorn.pid

@@ -1,0 +1,12 @@
+## GIT IGNORED FILES
+
+# Misc
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+benchmarks/*.png
+dist/

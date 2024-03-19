@@ -1,0 +1,8 @@
+## GIT IGNORED FILES
+
+# tests
+*.test-definitions.ts
+
+# dist
+packages/**/dist
+**/*.tsbuildinfo

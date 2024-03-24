@@ -159,7 +159,65 @@
           }
         ]
       }
+    },
+    "/survey/{id}/vote": {
+      "put": {
+        "tags": ["Survey"],
+        "summary": "Vote on a survey option",
+        "description": "Registers a vote for a specific option in a survey.",
+        "operationId": "voteSurveyOption",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the survey to vote on",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Option ID to vote for",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "optionId": {
+                    "type": "string",
+                    "description": "The ID of the option to vote for"
+                  }
+                },
+                "required": ["optionId"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Vote registered successfully. Returns the updated survey.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Survey"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid option - the option ID provided does not exist in the survey."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
     }
+    
   },
   "components": {
     "schemas": {
@@ -190,7 +248,12 @@
           "options": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                }
+              }
             }
           }
         }

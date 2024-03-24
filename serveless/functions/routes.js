@@ -1,11 +1,8 @@
-const admin = require("firebase-admin");
 const app = require("express")();
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-
-admin.initializeApp();
-
-const db = admin.firestore()
+const authMiddleware = require('./auth-middleware');
+const db = require('./database');
 
 app.get("/survey", function (request, response) {
   db
@@ -71,23 +68,7 @@ app.post('/login', (req, res) => {
 // ENDPOINTS PROTEGIDOS
 //================================================================================================
 
-app.use((req, res, next) => {
-  const token = req.headers.authorization;
-
-  if (!token) {
-    return res.status(401).send('Unauthorized');
-  }
-
-  jwt.verify(token, 'secret', (err, decoded) => {
-    if (err) {
-      return res.status(401).send('Unauthorized');
-    }
-
-      req.user = decoded;
-      next();
-    }
-  );
-});
+app.use(authMiddleware);
 
 app.post("/survey", function (request, response) {
   const { title, description, expiresAt, options } = request.body;

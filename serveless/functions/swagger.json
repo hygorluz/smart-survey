@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000",
+      "url": "https://us-central1-serveless-survey-api.cloudfunctions.net/api",
       "description": "Local server"
     }
   ],

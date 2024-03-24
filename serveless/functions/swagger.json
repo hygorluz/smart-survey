@@ -274,7 +274,12 @@
           "options": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                }
+              }
             }
           }
         },

@@ -17,7 +17,8 @@
     "express": "^4.19.1",
     "firebase-admin": "^11.8.0",
     "firebase-functions": "^4.3.1",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "swagger-ui-express": "^5.0.0"
   },
   "devDependencies": {
     "firebase-functions-test": "^3.1.0"

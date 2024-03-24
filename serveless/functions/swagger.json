@@ -1,0 +1,9 @@
+{
+  "openApi": "1.0.0",
+  "info": {
+    "title": "SmartSurvey",
+    "version": "1.0.0",
+    "description": "SmartSurvey API"
+  },
+  "basePath": "/api"  
+}

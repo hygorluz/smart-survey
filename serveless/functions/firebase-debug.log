@@ -1,0 +1,14 @@
+[debug] [2024-03-24T16:06:39.291Z] ----------------------------------------------------------------------
+[debug] [2024-03-24T16:06:39.292Z] Command:       /Users/guilhermecazaroto/.nvm/versions/node/v18.16.1/bin/node /Users/guilhermecazaroto/.nvm/versions/node/v18.16.1/bin/firebase deploy --project serveless-survey-api
+[debug] [2024-03-24T16:06:39.292Z] CLI Version:   13.5.2
+[debug] [2024-03-24T16:06:39.292Z] Platform:      darwin
+[debug] [2024-03-24T16:06:39.292Z] Node Version:  v18.16.1
+[debug] [2024-03-24T16:06:39.296Z] Time:          Sun Mar 24 2024 13:06:39 GMT-0300 (Brasilia Standard Time)
+[debug] [2024-03-24T16:06:39.296Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-03-24T16:06:39.335Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-03-24T16:06:39.335Z] > authorizing via signed-in user (gui.cazaroto@gmail.com)
+[debug] [2024-03-24T16:06:39.335Z] [iam] checking project serveless-survey-api for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2024-03-24T16:06:39.336Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/serveless-survey-api:testIamPermissions [none]
+[debug] [2024-03-24T16:06:39.336Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/serveless-survey-api:testIamPermissions x-goog-quota-user=projects/serveless-survey-api
+[debug] [2024-03-24T16:06:39.336Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/serveless-survey-api:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}

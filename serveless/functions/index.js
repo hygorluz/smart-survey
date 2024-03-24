@@ -9,12 +9,25 @@ admin.initializeApp();
 
 const db = admin.firestore()
 
-app.get("/survey", function (_, response) {
+app.get("/survey", function (request, response) {
   db
     .collection("survey")
     .get()
     .then(function (docs) {
-      response.json(docs);
+      let surveyList = [];
+      docs.forEach(function (doc) {
+        surveyList.push({
+          id: doc.id,
+          title: doc.data().title,
+          description: doc.data().description,
+          createdAt: doc.data().createdAt,
+          updatedAt: doc.data().updatedAt,
+          expiresAt: doc.data().expiresAt,
+          options: doc.data().options
+        })
+      })
+
+      response.json(surveyList);
     });
 })
 

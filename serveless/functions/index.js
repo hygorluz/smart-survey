@@ -7,20 +7,14 @@ const crypto = require('crypto');
 
 admin.initializeApp();
 
-const db = admin.firestore().collection("survey");
+const db = admin.firestore()
 
-app.get("/survey", function (request, response) {
-  db.get()
+app.get("/survey", function (_, response) {
+  db
+    .collection("survey")
+    .get()
     .then(function (docs) {
-      let surveyList = [];
-      docs.forEach(function (doc) {
-        surveyList.push({
-          title: doc.data().title,
-          description: doc.data().description,
-        })
-      })
-
-      response.json(surveyList);
+      response.json(docs);
     });
 })
 

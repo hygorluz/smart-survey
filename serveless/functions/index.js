@@ -1,4 +1,3 @@
-// const { onRequest } = require("firebase-functions/v2/https")
 const functions = require('firebase-functions');
 const admin = require("firebase-admin");
 const app = require("express")();
@@ -51,6 +50,9 @@ app.post('/login', (req, res) => {
     })
 });
 
+//================================================================================================
+// ENDPOINTS PROTEGIDOS
+//================================================================================================
 
 app.use((req, res, next) => {
   const token = req.headers.authorization;
@@ -87,6 +89,36 @@ app.post("/survey", function (request, response) {
     .add(survey)
     .then(function () {
       response.json(survey);
+    })
+})
+
+app.put("/survey/:id", function (request, response) {
+  const { title, description, expiresAt, options } = request.body;
+
+  const survey = {
+    title,
+    description,
+    updatedAt: new Date().toISOString(),
+    expiresAt,
+    options
+  }
+
+  db
+    .collection("survey")
+    .doc(request.params.id)
+    .update(survey)
+    .then(function () {
+      response.json(survey);
+    })
+})
+
+app.delete("/survey/:id", function (request, response) {
+  db
+    .collection("survey")
+    .doc(request.params.id)
+    .delete()
+    .then(function () {
+      response.json({ id: request.params.id });
     })
 })
 

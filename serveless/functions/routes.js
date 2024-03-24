@@ -83,7 +83,7 @@ app.post("/survey", function (request, response) {
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     expiresAt,
-    options
+    options: options.map(option => ({ ...option, votes: 0, id: crypto.randomUUID() }))
   }
 
   db
@@ -113,6 +113,26 @@ app.put("/survey/:id", function (request, response) {
       response.json(survey);
     })
 })
+
+app.put('/survey/:id/vote', (req, res) => {
+  const { optionId } = req.body;
+  const surveyId = req.params.id;
+
+  db.collection('survey').doc(surveyId).get()
+    .then(doc => {
+      const survey = doc.data();
+      const option = survey.options.find(option => option.id === optionId);
+
+      if (!option) {
+        return res.status(400).send('Invalid option');
+      }
+
+      option.votes = option.votes + 1;
+
+      db.collection('survey').doc(surveyId).update({ options: survey.options })
+        .then(() => res.json(survey));
+    });
+});
 
 app.delete("/survey/:id", function (request, response) {
   db

@@ -17,7 +17,7 @@ app.get("/survey", function (request, response) {
       let surveyList = [];
       docs.forEach(function (doc) {
         surveyList.push({
-          id: doc.id,
+          id: doc.data().id,
           title: doc.data().title,
           description: doc.data().description,
           createdAt: doc.data().createdAt,

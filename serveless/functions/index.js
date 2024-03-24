@@ -35,27 +35,20 @@ app.post('/login', (req, res) => {
   const { login, password } = req.body;
   const passwordHash = crypto.createHash('sha256').update(password).digest('hex');
 
-  db.collection('users').where('login', '==', login).get()
+  db.collection('users').where('login', '==', login).where('password', '==', passwordHash).get()
     .then(snapshot => {
       if (snapshot.empty) {
-        return res.status(404).send('Usuário não encontrado.');
+        return res.status(401).send('Unauthorized');
       }
 
-      // Assumindo que 'login' é único e apenas um documento deve ser retornado
-      snapshot.forEach(doc => {
-        const user = doc.data();
-        if (user.password === passwordHash) {
-          const token = jwt.sign({ login }, 'SmartSurvey', { expiresIn: '1h' });
-          res.json({ token });
-        } else {
-          res.status(401).send('Login ou senha incorretos.');
-        }
-      });
+      const user = snapshot.docs[0].data();
+      const token
+        = jwt.sign({ login: user.login, role: user.role },
+          'secret',
+          { expiresIn: '1h' });
+
+      return res.json({ token });
     })
-    .catch(error => {
-      console.error('Erro ao buscar usuário:', error);
-      res.status(500).send('Erro interno do servidor.');
-    });
 });
 
 

@@ -88,7 +88,7 @@
         },
         "security": [
           {
-            "bearerAuth": []
+            "api_key": []
           }
         ]
       }
@@ -141,7 +141,7 @@
         },
         "security": [
           {
-            "bearerAuth": []
+            "api_key": []
           }
         ]
       },
@@ -155,7 +155,7 @@
         },
         "security": [
           {
-            "bearerAuth": []
+            "api_key": []
           }
         ]
       }
@@ -212,7 +212,7 @@
         },
         "security": [
           {
-            "bearerAuth": []
+            "api_key": []
           }
         ]
       }
@@ -299,10 +299,11 @@
       }
     },
     "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
+      "api_key": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Insira o token diretamente. NÃO adicione 'Bearer ' antes do token."
       }
     }
   }

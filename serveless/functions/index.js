@@ -52,12 +52,42 @@ app.post('/login', (req, res) => {
 });
 
 
+app.use((req, res, next) => {
+  const token = req.headers.authorization;
 
-// app.post("/survey", function (request, response) {
-//   db.add({ description: request.body.description })
-//     .then(function () {
-//       response.json({ general: "Works" });
-//     })
-// })
+  if (!token) {
+    return res.status(401).send('Unauthorized');
+  }
+
+  jwt.verify(token, 'secret', (err, decoded) => {
+    if (err) {
+      return res.status(401).send('Unauthorized');
+    }
+
+      req.user = decoded;
+      next();
+    }
+  );
+});
+
+app.post("/survey", function (request, response) {
+  const { title, description, expiresAt, options } = request.body;
+
+  const survey = {
+    title,
+    description,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    expiresAt,
+    options
+  }
+
+  db
+    .collection("survey")
+    .add(survey)
+    .then(function () {
+      response.json(survey);
+    })
+})
 
 exports.api = functions.https.onRequest(app)

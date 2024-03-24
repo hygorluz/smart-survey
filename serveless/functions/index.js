@@ -16,7 +16,7 @@ app.get("/survey", function (request, response) {
       let surveyList = [];
       docs.forEach(function (doc) {
         surveyList.push({
-          id: doc.data().id,
+          id: doc.id,
           title: doc.data().title,
           description: doc.data().description,
           createdAt: doc.data().createdAt,
@@ -28,6 +28,24 @@ app.get("/survey", function (request, response) {
 
       response.json(surveyList);
     });
+})
+
+app.get("/survey/:id", function (request, response) {
+  db
+    .collection("survey")
+    .doc(request.params.id)
+    .get()
+    .then(function (doc) {
+      response.json({
+        id: doc.id,
+        title: doc.data().title,
+        description: doc.data().description,
+        createdAt: doc.data().createdAt,
+        updatedAt: doc.data().updatedAt,
+        expiresAt: doc.data().expiresAt,
+        options: doc.data().options
+      });
+    })
 })
 
 app.post('/login', (req, res) => {

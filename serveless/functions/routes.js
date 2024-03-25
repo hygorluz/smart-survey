@@ -86,24 +86,24 @@ app.post("/survey", function (request, response) {
     options: body?.options?.map(option => ({ ...option, votes: 0, id: crypto.randomUUID() }))
   }
 
-  db
-    .collection("survey")
-    .add(survey)
-    .then(function () {
-      response.json(survey);
-    }).catch(function (error) {
-      console.error(error);
-      const errorMessage = error.message || "Unknown Firestore Error";
-      const errorCode = error.code || "UNKNOWN";
-      response.status(500).json({
-        success: false,
-        message: "Failed to add document to Firestore.",
-        error: {
-          message: errorMessage,
-          code: errorCode
-        }
-      });
-    })
+  // db
+  //   .collection("survey")
+  //   .add(survey)
+  //   .then(function () {
+  //     response.json(survey);
+  //   }).catch(function (error) {
+  //     console.error(error);
+  //     const errorMessage = error.message || "Unknown Firestore Error";
+  //     const errorCode = error.code || "UNKNOWN";
+  //     response.status(500).json({
+  //       success: false,
+  //       message: "Failed to add document to Firestore.",
+  //       error: {
+  //         message: errorMessage,
+  //         code: errorCode
+  //       }
+  //     });
+  //   })
 })
 
 app.put("/survey/:id", function (request, response) {

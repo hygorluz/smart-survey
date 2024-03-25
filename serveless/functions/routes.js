@@ -83,7 +83,7 @@ app.post("/survey", function (request, response) {
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     expiresAt: body?.expiresAt,
-    options: options?.map(option => ({ ...option, votes: 0, id: crypto.randomUUID() }))
+    options: body?.options?.map(option => ({ ...option, votes: 0, id: crypto.randomUUID() }))
   }
 
   db

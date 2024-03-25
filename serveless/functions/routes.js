@@ -87,13 +87,13 @@ app.post("/survey",  async (request, response) => {
   }
 
   try {
-    const docRef = await db.collection("survey").doc(); // Generate a unique document reference
-    await docRef.set(survey); // Set the data using the generated ref
+    const docRef = await db.collection("survey").doc(); 
+    await docRef.set(survey);
   
-    return response.json(survey); // Return the created survey
+    return response.json(survey); 
   
   } catch (error) {
-    console.error(error); // Log the error for debugging
+    console.error(error);
   
     const errorMessage = error.message || "Unknown Firestore Error";
     const errorCode = error.code || "UNKNOWN";

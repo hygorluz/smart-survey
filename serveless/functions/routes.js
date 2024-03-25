@@ -118,11 +118,12 @@ app.put("/survey/:id", async (request, response) => {
     description: body?.description,
     updatedAt: new Date().toISOString(),
     expiresAt: body?.expiresAt,
-    options
+    options: body?.options
   }
 
   try {
-    await db.collection("survey").doc(request.params.id).update(survey);
+    const docRef = await db.collection("survey").doc(request.params.id)
+    await docRef.update(survey);
 
     return response.json(survey);
   } catch (error) {

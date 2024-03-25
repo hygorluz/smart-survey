@@ -92,10 +92,16 @@ app.post("/survey", function (request, response) {
     .then(function () {
       response.json(survey);
     }).catch(function (error) {
+      console.error(error);
+      const errorMessage = error.message || "Unknown Firestore Error";
+      const errorCode = error.code || "UNKNOWN";
       response.status(500).json({
         success: false,
         message: "Failed to add document to Firestore.",
-        error: error.message // Include only the error message for simplicity
+        error: {
+          message: errorMessage,
+          code: errorCode
+        }
       });
     })
 })

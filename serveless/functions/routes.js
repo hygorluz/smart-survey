@@ -110,24 +110,37 @@ app.post("/survey",  async (request, response) => {
 
 })
 
-app.put("/survey/:id", function (request, response) {
-  const { title, description, expiresAt, options } = request.body;
+app.put("/survey/:id", async (request, response) => {
+  const body = request.body;
 
   const survey = {
-    title,
-    description,
+    title: body?.title,
+    description: body?.description,
     updatedAt: new Date().toISOString(),
-    expiresAt,
+    expiresAt: body?.expiresAt,
     options
   }
 
-  db
-    .collection("survey")
-    .doc(request.params.id)
-    .update(survey)
-    .then(function () {
-      response.json(survey);
+  try {
+    await db.collection("survey").doc(request.params.id).update(survey);
+
+    return response.json(survey);
+  } catch (error) {
+    console.error(error);
+
+    const errorMessage = error.message || "Unknown Firestore Error";
+    const errorCode = error.code || "UNKNOWN";
+
+    return response.status(500).json({
+      success: false,
+      message: "Failed to update document in Firestore.",
+      error: {
+        message: errorMessage,
+        code: errorCode
+      }
     })
+  }
+
 })
 
 app.put('/survey/:id/vote', (req, res) => {

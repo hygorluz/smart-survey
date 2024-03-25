@@ -74,7 +74,7 @@ app.post('/login', (req, res) => {
 
 app.use(authMiddleware);
 
-app.post("/survey", function (request, response) {
+app.post("/survey",  async (request, response) => {
   const body = request.body;
 
   const survey = {
@@ -86,24 +86,28 @@ app.post("/survey", function (request, response) {
     options: body?.options?.map(option => ({ ...option, votes: 0, id: crypto.randomUUID() }))
   }
 
-  // db
-  //   .collection("survey")
-  //   .add(survey)
-  //   .then(function () {
-  //     response.json(survey);
-  //   }).catch(function (error) {
-  //     console.error(error);
-  //     const errorMessage = error.message || "Unknown Firestore Error";
-  //     const errorCode = error.code || "UNKNOWN";
-  //     response.status(500).json({
-  //       success: false,
-  //       message: "Failed to add document to Firestore.",
-  //       error: {
-  //         message: errorMessage,
-  //         code: errorCode
-  //       }
-  //     });
-  //   })
+  try {
+    const docRef = await db.collection("survey").doc(); // Generate a unique document reference
+    await docRef.set(survey); // Set the data using the generated ref
+  
+    return response.json(survey); // Return the created survey
+  
+  } catch (error) {
+    console.error(error); // Log the error for debugging
+  
+    const errorMessage = error.message || "Unknown Firestore Error";
+    const errorCode = error.code || "UNKNOWN";
+  
+    return response.status(500).json({
+      success: false,
+      message: "Failed to set document in Firestore.",
+      error: {
+        message: errorMessage,
+        code: errorCode
+      }
+    });
+  }
+
 })
 
 app.put("/survey/:id", function (request, response) {

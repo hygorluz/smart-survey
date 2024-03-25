@@ -75,15 +75,15 @@ app.post('/login', (req, res) => {
 app.use(authMiddleware);
 
 app.post("/survey", function (request, response) {
-  const { title, description, expiresAt, options } = request.body;
+  const body = request.body;
 
   const survey = {
-    title,
-    description,
+    title: body?.title,
+    description: body?.description,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
-    expiresAt,
-    options: options.map(option => ({ ...option, votes: 0, id: crypto.randomUUID() }))
+    expiresAt: body?.expiresAt,
+    options: options?.map(option => ({ ...option, votes: 0, id: crypto.randomUUID() }))
   }
 
   db

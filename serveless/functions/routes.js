@@ -91,6 +91,12 @@ app.post("/survey", function (request, response) {
     .add(survey)
     .then(function () {
       response.json(survey);
+    }).catch(function (error) {
+      response.status(500).json({
+        success: false,
+        message: "Failed to add document to Firestore.",
+        error: error.message // Include only the error message for simplicity
+      });
     })
 })
 

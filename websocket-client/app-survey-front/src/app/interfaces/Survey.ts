@@ -1,11 +1,11 @@
-import {Option} from "./Option";
+import { Option } from './Option';
 
 export interface Survey {
     id: string;
-    expiresAt: string;
+    expiresAt: Date;
     description: string;
-    createdAt: string;
+    createdAt?: string;
     title: string;
-    updatedAt: string;
+    updatedAt?: string;
     options: Option[];
 }

@@ -12,13 +12,13 @@ export class SurveyService {
     constructor() {
         this.apolloClient = new ApolloClient({
             link: new HttpLink({
-                uri: 'http://localhost:4000/',
+                uri: 'https://graphql-api-silk.vercel.app/',
             }),
             cache: new InMemoryCache(),
         });
     }
 
-    async getSurveys(): Promise<{ survey: Survey }> {
+    async getSurveys(): Promise<Survey[]> {
         try {
             const result = await this.apolloClient.query({
                 query: gql`

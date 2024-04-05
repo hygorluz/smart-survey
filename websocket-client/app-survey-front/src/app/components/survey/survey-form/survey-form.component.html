@@ -1,0 +1,36 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <h1>Survey</h1>
+            <div class="p-field">
+                <label for="title">Título</label>
+                <input id="title" type="text" pInputText [(ngModel)]="survey.title" />
+            </div>
+            <div class="p-field">
+                <label for="description">Descrição</label>
+                <input id="description" type="text" pInputText [(ngModel)]="survey.description" />
+            </div>
+            <div class="p-field">
+                <label for="expiresAt">Expira em</label>
+                <p-calendar id="expiresAt" [(ngModel)]="survey.expiresAt" showIcon="true" [locale]="'pt-BR'"
+                    dateFormat="dd/mm/yy"></p-calendar>
+            </div>
+
+            <div class="p-field">
+                <label>Opções</label>
+                <ul>
+                    <li *ngFor="let option of survey.options">
+                        {{ option.title }}
+                    </li>
+                </ul>
+                <input type="text" [(ngModel)]="newOption" pInputText />
+                <button type="button" (click)="addOption()" pButton pButton="text">Adicionar Opção</button>
+            </div>
+
+            <div class="p-field">
+                <button type="button" (click)="saveSurvey()" pButton pButton="primary">Salvar Enquete</button>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DataViewModule } from 'primeng/dataview';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @NgModule({
     imports: [
@@ -18,6 +19,7 @@ import { ButtonModule } from 'primeng/button';
         TableModule,
         InputTextModule,
         ButtonModule,
+        ConfirmDialogModule,
     ],
     declarations: [DashboardComponent],
 })

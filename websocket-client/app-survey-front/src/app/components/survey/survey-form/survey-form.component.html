@@ -12,7 +12,7 @@
             </div>
             <div class="p-field">
                 <label for="expiresAt">Expira em</label>
-                <p-calendar id="expiresAt" [(ngModel)]="survey.expiresAt" showIcon="true" [locale]="'pt-BR'"
+                <p-calendar id="expiresAt" [(ngModel)]="survey.expiresAt" showIcon="true" locale="pt-BR"
                     dateFormat="dd/mm/yy"></p-calendar>
             </div>
 
@@ -27,8 +27,13 @@
                 <button type="button" (click)="addOption()" pButton pButton="text">Adicionar Opção</button>
             </div>
 
-            <div class="p-field">
-                <button type="button" (click)="saveSurvey()" pButton pButton="primary">Salvar Enquete</button>
+
+            <div class="p-field" *ngIf="survey.id">
+                <button type="button" (click)="saveSurvey()" pButton pButton="primary">Atualizar Enquete</button>
+            </div>
+
+            <div class="p-field" *ngIf="!survey.id">
+                <button type="button" (click)="saveSurvey()" pButton pButton="primary">Criar Enquete</button>
             </div>
 
         </div>

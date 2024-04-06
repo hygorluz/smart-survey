@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
     templateUrl: './survey-form.component.html',
 })
 export class SurveyFormComponent implements OnInit {
+    isEdit: boolean = false;
     survey: Survey = {
         id: '',
         expiresAt: null,
@@ -19,6 +20,19 @@ export class SurveyFormComponent implements OnInit {
     };
     constructor(private surveyService: SurveyService,
                 private router: Router) {
+        // get survey id from route
+        const id = this.router.url.split('/')[3];
+        if (id) {
+            this.isEdit = true;
+            this.surveyService.getSurveyById(id)
+                .then((survey: Survey) => {
+                    const timeString = survey.expiresAt;
+                    const dateObject = new Date(timeString);
+
+                    // survey.expiresAt = dateObject;
+                    this.survey = survey;
+                })
+        }
     }
 
     ngOnInit() {}
@@ -42,4 +56,5 @@ export class SurveyFormComponent implements OnInit {
                 this.router.navigate([`/`]);
             })
     }
+
 }

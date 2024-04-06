@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit {
     }
 
     navigateToSurveyEdit(id) {
-        //todo implementar
+        this.router.navigate([`survey/form/${id}`]);
     }
 
     deleteSurvey(id) {

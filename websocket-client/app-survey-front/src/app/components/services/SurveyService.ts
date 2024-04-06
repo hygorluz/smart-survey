@@ -47,6 +47,36 @@ export class SurveyService {
         }
     }
 
+    async getSurveyById(id: string): Promise<Survey> {
+        try {
+            const result = await this.apolloClient.query({
+                query: gql`
+                    query GetSurveyById($id: String!) {
+                        getSurveyById(id: $id) {
+                            id
+                            expiresAt
+                            description
+                            createdAt
+                            title
+                            updatedAt
+                            options {
+                                id
+                                title
+                                votes
+                            }
+                        }
+                    }
+                `,
+                variables: { id },
+            });
+
+            return result.data.getSurveyById;
+        } catch (error) {
+            console.error(`Error fetching survey with ID ${id}:`, error);
+            throw error;
+        }
+    }
+
     async createSurvey(title: string, description: string, expiresAt: string, options: { id?: string, title: string, votes?: number }[]): Promise<Survey> {
         try {
             const result = await this.apolloClient.mutate({

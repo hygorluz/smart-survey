@@ -9,6 +9,7 @@ import { DataViewModule } from 'primeng/dataview';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {ToastModule} from "primeng/toast";
 
 @NgModule({
     imports: [
@@ -20,6 +21,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
         InputTextModule,
         ButtonModule,
         ConfirmDialogModule,
+        ToastModule,
     ],
     declarations: [DashboardComponent],
 })

@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import {SurveyService} from "./components/services/SurveyService";
-import {ConfirmationService} from "primeng/api";
+import {ConfirmationService, MessageService} from "primeng/api";
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
@@ -13,7 +13,8 @@ import {ConfirmationService} from "primeng/api";
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         SurveyService,
-        ConfirmationService
+        ConfirmationService,
+        MessageService,
     ],
     bootstrap: [AppComponent],
 })

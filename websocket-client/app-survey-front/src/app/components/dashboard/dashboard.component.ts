@@ -3,7 +3,7 @@ import {SurveyService} from '../services/SurveyService';
 import {Survey} from 'src/app/interfaces/Survey';
 import {Table} from 'primeng/table';
 import {Router} from '@angular/router';
-import {ConfirmationService} from "primeng/api";
+import {ConfirmationService, MessageService} from "primeng/api";
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
 
     constructor(private surveyService: SurveyService,
                 private router: Router,
+                private messageService: MessageService,
                 private confirmationService: ConfirmationService) {
     }
 
@@ -72,6 +73,7 @@ export class DashboardComponent implements OnInit {
                 this.surveyService.deleteSurveyById(id).then(
                     () => {
                         this.surveys = this.surveys.filter(survey => survey.id !== id);
+                        this.messageService.add({severity:'success', summary: 'Successful', detail: 'Survey Deletada !', life: 3000});
                     }
                 );
             }

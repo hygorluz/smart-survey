@@ -108,39 +108,11 @@ export class SurveyService {
     }
 
 
-    async updateSurveyById(input: {
-        id: string,
-        title: string,
-        description: string,
-        expiresAt: string,
-        options: { id: string, title: string, votes: number }[]
-    }): Promise<Survey> {
-        try {
-            const result = await this.apolloClient.mutate({
-                mutation: gql`
-          mutation UpdateSurveyById($input: UpdateSurveyInput!) {
-            updateSurveyById(input: $input) {
-              createdAt
-              description
-              expiresAt
-              id
-              options {
-                id
-                title
-                votes
-              }
-              title
-              updatedAt
-            }
-          }
-        `,
-                variables: { input },
-            });
-
-            return result.data.updateSurveyById;
-        } catch (error) {
-            console.error('Error updating survey:', error);
-            throw error;
+    async createOrUpdateSurvey(id?: string, title?: string, description?: string, expiresAt?: string, options?: { id?: string, title: string, votes?: number }[]): Promise<Survey> {
+        if (id) {
+            return this.updateSurveyById(id, title, description, expiresAt, options);
+        } else {
+            return this.createSurvey(title, description, expiresAt, options);
         }
     }
 
@@ -160,4 +132,31 @@ export class SurveyService {
         }
     }
 
+    async updateSurveyById(id: string, title: string, description: string, expiresAt: string, options: { title: string }[]): Promise<Survey> {
+        try {
+            const result = await this.apolloClient.mutate({
+                mutation: gql`
+                    mutation UpdateSurveyById($id: String!, $title: String!, $description: String!, $expiresAt: String!, $options: [OptionInput]!) {
+                        updateSurveyById(id: $id, title: $title, description: $description, expiresAt: $expiresAt, options: $options) {
+                            id
+                            expiresAt
+                            description
+                            createdAt
+                            title
+                            updatedAt
+                            options {
+                                title
+                            }
+                        }
+                    }
+                `,
+                variables: { id, title, description, expiresAt, options },
+            });
+
+            return result.data.updateSurveyById;
+        } catch (error) {
+            console.error('Error updating survey:', error);
+            throw error;
+        }
+    }
 }

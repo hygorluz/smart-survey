@@ -28,9 +28,9 @@ export class SurveyFormComponent implements OnInit {
                 .then((survey: Survey) => {
                     const timeString = survey.expiresAt;
                     const dateObject = new Date(timeString);
-
-                    // survey.expiresAt = dateObject;
-                    this.survey = survey;
+                    let newSurvey: any = JSON.parse(JSON.stringify(survey));
+                    newSurvey.expiresAt = dateObject;
+                    this.survey = newSurvey;
                 })
         }
     }
@@ -57,4 +57,21 @@ export class SurveyFormComponent implements OnInit {
             })
     }
 
+    updateSurvey() {
+        // FIXME: devido a um bug no Apollo Client,
+        //  é necessário remover os campos __typename,
+        //  id e votes, pois o Apollo Client não consegue lidar com esses campos
+
+        this.survey.options.forEach((option: any) => {
+            delete option.__typename;
+            delete option.id;
+            delete option.votes;
+        });
+
+        this.surveyService.updateSurveyById(this.survey.id, this.survey.title, this.survey.description, this.survey.expiresAt.toISOString(), this.survey.options)
+            .then((survey) => {
+                this.survey = null;
+                this.router.navigate([`/`]);
+            })
+    }
 }

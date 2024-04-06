@@ -47,32 +47,27 @@ export class SurveyService {
         }
     }
 
-    async createSurvey(input: {
-        title: string,
-        description: string,
-        expiresAt: string,
-        options: { title: string, votes: number }[]
-    }): Promise<Survey> {
+    async createSurvey(title: string, description: string, expiresAt: string, options: { id?: string, title: string, votes?: number }[]): Promise<Survey> {
         try {
             const result = await this.apolloClient.mutate({
                 mutation: gql`
-          mutation CreateSurvey($input: SurveyInput!) {
-            createSurvey(input: $input) {
-              createdAt
-              description
-              expiresAt
-              id
-              options {
-                id
-                votes
-                title
-              }
-              title
-              updatedAt
-            }
-          }
-        `,
-                variables: {input},
+                    mutation CreateSurvey($title: String!, $description: String!, $expiresAt: String!, $options: [OptionInput]!) {
+                        createSurvey(title: $title, description: $description, expiresAt: $expiresAt, options: $options) {
+                            id
+                            expiresAt
+                            description
+                            createdAt
+                            title
+                            updatedAt
+                            options {
+                                id
+                                title
+                                votes
+                            }
+                        }
+                    }
+                `,
+                variables: { title, description, expiresAt, options },
             });
 
             return result.data.createSurvey;
@@ -81,6 +76,7 @@ export class SurveyService {
             throw error;
         }
     }
+
 
     async updateSurveyById(input: {
         id: string,

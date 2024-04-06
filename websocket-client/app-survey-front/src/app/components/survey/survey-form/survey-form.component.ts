@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Option } from 'src/app/interfaces/Option';
 import { Survey } from 'src/app/interfaces/Survey';
+import {SurveyService} from "../../services/SurveyService";
+import {Router} from "@angular/router";
 
 @Component({
     templateUrl: './survey-form.component.html',
@@ -15,7 +17,9 @@ export class SurveyFormComponent implements OnInit {
         updatedAt: '',
         options: [],
     };
-    constructor() {}
+    constructor(private surveyService: SurveyService,
+                private router: Router) {
+    }
 
     ngOnInit() {}
 
@@ -32,6 +36,10 @@ export class SurveyFormComponent implements OnInit {
     }
 
     saveSurvey() {
-        console.log(this.survey);
+        this.surveyService.createSurvey(this.survey.title, this.survey.description, this.survey.expiresAt.toISOString(), this.survey.options)
+            .then((survey) => {
+                this.survey = null;
+                this.router.navigate([`/`]);
+            })
     }
 }

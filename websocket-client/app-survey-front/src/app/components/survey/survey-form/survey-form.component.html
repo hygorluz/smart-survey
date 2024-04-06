@@ -1,41 +1,65 @@
-<div class="grid">
-    <div class="col-12">
-        <div class="card">
-            <h1>Survey</h1>
-            <div class="p-field">
-                <label for="title">Título</label>
-                <input id="title" type="text" pInputText [(ngModel)]="survey.title" />
+<div class="" styleClass="p-fluid" *ngIf="!isLoading">
+    <div class="card grid">
+        <div class="col-6">
+
+            <h3>Survey</h3>
+            <div class="field">
+                <label for="title" class="block">Título</label>
+                <input id="title" type="text" pInputText [(ngModel)]="survey.title"
+                       placeholder="Digite o título da enquete"/>
+                <small class="p-error block" *ngIf="isSubmitted && !survey.title">Título é obrigatório</small>
             </div>
-            <div class="p-field">
-                <label for="description">Descrição</label>
-                <input id="description" type="text" pInputText [(ngModel)]="survey.description" />
+
+            <div class="field">
+                <label for="description" class="block">Descrição</label>
+                <input id="description" type="text" pInputText [(ngModel)]="survey.description"
+                       placeholder="Digite a descrição da enquete"/>
+                <small class="p-error block" *ngIf="isSubmitted && !survey.description">Descrição é obrigatório</small>
             </div>
-            <div class="p-field">
-                <label for="expiresAt">Expira em</label>
+            <div class="field">
+                <label for="expiresAt" class="block">Expira em</label>
                 <p-calendar id="expiresAt" [(ngModel)]="survey.expiresAt" showIcon="true" locale="pt-BR"
-                    dateFormat="dd/mm/yy"></p-calendar>
+                            dateFormat="dd/mm/yy" placeholder="Data de expiração"></p-calendar>
+                <small class="p-error block" *ngIf="isSubmitted && !survey.expiresAt">Data de expiração é obrigatório</small>
             </div>
+        </div>
 
-            <div class="p-field">
-                <label>Opções</label>
-                <ul>
-                    <li *ngFor="let option of survey.options">
-                        {{ option.title }}
-                    </li>
-                </ul>
-                <input type="text" [(ngModel)]="newOption" pInputText />
-                <button type="button" (click)="addOption()" pButton pButton="text">Adicionar Opção</button>
-            </div>
+        <div class="col-6">
+            <h3>Opções de Voto</h3>
 
+            <input id="option" type="text" pInputText [(ngModel)]="newOption" placeholder="Digite a opção"/>
+            <button class="mt-2" type="button" (click)="addOption()" pButton pButton="text">Adicionar Opção</button>
+            <small class="p-error block" *ngIf="isSubmitted && !survey.options.length">Adicione pelo menos duas opções</small>
 
-            <div class="p-field" *ngIf="survey.id">
-                <button type="button" (click)="updateSurvey()" pButton pButton="primary">Atualizar Enquete</button>
-            </div>
+            <p-table [value]="survey.options">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Título</th>
+                        <th>Votos</th>
+                        <th></th>
+                    </tr>
+                </ng-template>
 
-            <div class="p-field" *ngIf="!survey.id">
-                <button type="button" (click)="saveSurvey()" pButton pButton="primary">Criar Enquete</button>
-            </div>
+                <ng-template pTemplate="body" let-option>
+                    <tr>
+                        <td>{{ option.title }}</td>
+                        <td>{{ option.votes }}</td>
+                        <td>
+                            <button type="button" (click)="removeOption(option)" pButton pButton="text">
+                                <i class="pi pi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
 
         </div>
     </div>
+
+
+    <button type="button" (click)="createOrUpdateSurvey()" pButton pButton="primary">Salvar Enquete</button>
+</div>
+
+<div class="loading" *ngIf="isLoading">
+    <p-progressSpinner></p-progressSpinner>
 </div>

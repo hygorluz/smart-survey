@@ -19,30 +19,31 @@ export class SurveyService {
     }
 
     async getSurveys(): Promise<Survey[]> {
+
         try {
             const result = await this.apolloClient.query({
                 query: gql`
-                  query {
-                    survey {
-                      id
-                        expiresAt
-                        description
-                        createdAt
-                        title
-                        updatedAt
-                        options {
-                          id
-                          title
-                          votes
+                    query {
+                        survey {
+                            id
+                            expiresAt
+                            description
+                            createdAt
+                            title
+                            updatedAt
+                            options {
+                                id
+                                title
+                                votes
+                            }
                         }
                     }
-                  }
                 `,
             });
 
-            return result.data;
+            return result.data.survey;
         } catch (error) {
-            console.error('Error fetching users:', error);
+            console.error('Error fetching surveys:', error);
             throw error;
         }
     }

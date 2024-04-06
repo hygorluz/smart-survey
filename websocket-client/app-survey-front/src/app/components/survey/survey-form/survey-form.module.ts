@@ -6,6 +6,8 @@ import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { SurveyFormsRoutingModule } from './survey-form-routing.module';
+import {TableModule} from "primeng/table";
+import {ProgressSpinnerModule} from "primeng/progressspinner";
 
 @NgModule({
     imports: [
@@ -15,6 +17,8 @@ import { SurveyFormsRoutingModule } from './survey-form-routing.module';
         CalendarModule,
         InputTextModule,
         ButtonModule,
+        TableModule,
+        ProgressSpinnerModule,
     ],
     declarations: [SurveyFormComponent],
 })

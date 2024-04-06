@@ -9,10 +9,9 @@ import {ConfirmationService, MessageService} from "primeng/api";
     templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
+    @ViewChild('dt1') table!: Table;
     surveys: Survey[] = [];
-
-    loading: boolean = true;
-
+    loading: boolean = false;
     @ViewChild('filter') filter!: ElementRef;
 
     constructor(private surveyService: SurveyService,
@@ -22,21 +21,7 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.surveyService.getSurveys().then(
-            (data: any) => {
-                if (data && data.survey) {
-                    this.loading = false;
-                    let surveys = [...data.survey];
-                    this.surveys = surveys;
-
-                } else {
-                    console.error('Dados inválidos recebidos do serviço.');
-                }
-            },
-            (error) => {
-                console.error('Erro ao buscar dados:', error);
-            }
-        );
+        this.getSurveys();
     }
 
     navigateToSurveyCreate() {
@@ -73,10 +58,34 @@ export class DashboardComponent implements OnInit {
                 this.surveyService.deleteSurveyById(id).then(
                     () => {
                         this.surveys = this.surveys.filter(survey => survey.id !== id);
-                        this.messageService.add({severity:'success', summary: 'Sucesso !', detail: 'Enquete Deletada', life: 3000});
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: 'Sucesso !',
+                            detail: 'Enquete Deletada',
+                            life: 3000
+                        });
                     }
                 );
             }
         });
+    }
+
+
+    private getSurveys() {
+        this.loading = true;
+        this.surveyService.getSurveys().then(
+            (data: any) => {
+                if (!data){
+                    this.loading = false;
+                    return;
+                }
+                this.surveys = new Array<Survey>();
+                this.surveys = [...data];
+                this.loading = false;
+            },
+            (error) => {
+                console.error('Erro ao buscar dados:', error);
+            }
+        );
     }
 }

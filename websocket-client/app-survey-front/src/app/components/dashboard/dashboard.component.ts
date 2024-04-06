@@ -26,8 +26,8 @@ export class DashboardComponent implements OnInit {
             (data: any) => {
                 if (data && data.survey) {
                     this.loading = false;
-                    console.log(data.survey);
-                    this.surveys = data.survey;
+                    let surveys = [...data.survey];
+                    this.surveys = surveys;
 
                 } else {
                     console.error('Dados inválidos recebidos do serviço.');

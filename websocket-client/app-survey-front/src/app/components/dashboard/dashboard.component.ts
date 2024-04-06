@@ -73,7 +73,7 @@ export class DashboardComponent implements OnInit {
                 this.surveyService.deleteSurveyById(id).then(
                     () => {
                         this.surveys = this.surveys.filter(survey => survey.id !== id);
-                        this.messageService.add({severity:'success', summary: 'Successful', detail: 'Survey Deletada !', life: 3000});
+                        this.messageService.add({severity:'success', summary: 'Sucesso !', detail: 'Enquete Deletada', life: 3000});
                     }
                 );
             }

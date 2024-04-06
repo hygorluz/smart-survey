@@ -69,7 +69,11 @@ export class DashboardComponent implements OnInit {
 
             accept: () => {
                 console.log('Excluir');
-                //todo implementar
+                this.surveyService.deleteSurveyById(id).then(
+                    () => {
+                        this.surveys = this.surveys.filter(survey => survey.id !== id);
+                    }
+                );
             }
         });
     }

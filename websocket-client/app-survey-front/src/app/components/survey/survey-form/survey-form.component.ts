@@ -23,6 +23,9 @@ export class SurveyFormComponent implements OnInit {
 
     constructor(private surveyService: SurveyService,
                 private router: Router) {
+    }
+
+    ngOnInit() {
         // get survey id from route
         const id = this.router.url.split('/')[3];
         if (id) {
@@ -38,9 +41,6 @@ export class SurveyFormComponent implements OnInit {
                     this.isLoading = false;
                 })
         }
-    }
-
-    ngOnInit() {
     }
 
     newOption: string = '';

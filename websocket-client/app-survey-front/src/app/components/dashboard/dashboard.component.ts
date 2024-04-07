@@ -21,7 +21,16 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getSurveys();
+        // FIXME: devido ao cache do navegador, a página não é recarregada ao sair do formulário de enquete
+        if (!localStorage.getItem('foo')) {
+            localStorage.setItem('foo', 'no reload')
+            location.reload();
+        } else {
+            localStorage.removeItem('foo')
+        }
+        if (!this.surveys.length) {
+            this.getSurveys();
+        }
     }
 
     navigateToSurveyCreate() {
@@ -75,7 +84,7 @@ export class DashboardComponent implements OnInit {
         this.loading = true;
         this.surveyService.getSurveys().then(
             (data: any) => {
-                if (!data){
+                if (!data) {
                     this.loading = false;
                     return;
                 }

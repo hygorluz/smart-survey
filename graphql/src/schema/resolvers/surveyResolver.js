@@ -1,7 +1,8 @@
-const api = require("../../config/http");
+const createApi = require("../../config/http");
 
 const getSurveys = async () => {
   try {
+    const api = await createApi();
     const response = await api.get("survey");
     const data = response.data;
     return data;
@@ -12,6 +13,7 @@ const getSurveys = async () => {
 
 const getSurveyById = async (_, args) => {
   try {
+    const api = await createApi();
     const response = await api.get(`survey/${args.id}`);
     return response.data;
   } catch (error) {
@@ -21,6 +23,7 @@ const getSurveyById = async (_, args) => {
 
 const createSurvey = async (_, args) => {
   try {
+    const api = await createApi();
     const response = await api.post("survey", {
       title: args.title,
       expiresAt: args.expiresAt,
@@ -35,6 +38,7 @@ const createSurvey = async (_, args) => {
 
 const updateSurveyById = async (_, args) => {
   try {
+    const api = await createApi();
     const response = await api.put(`survey/${args.id}`, {
       title: args.title,
       expiresAt: args.expiresAt,
@@ -49,6 +53,7 @@ const updateSurveyById = async (_, args) => {
 
 const deleteSurveyById = async (_, args) => {
   try {
+    const api = await createApi();
     await api.delete(`survey/${args.id}`);
     return "Pesquisa deletada com sucesso."; // Retorna uma mensagem de sucesso
   } catch (error) {
@@ -58,6 +63,7 @@ const deleteSurveyById = async (_, args) => {
 
 const voteSurveyById = async (_, args) => {
   try {
+    const api = await createApi();
     console.log(args);
     const response = await api.put(`survey/${args.id}/vote`, {
       optionId: args.optionId

@@ -3,6 +3,7 @@ import {Option} from 'src/app/interfaces/Option';
 import {Survey} from 'src/app/interfaces/Survey';
 import {SurveyService} from "../../services/SurveyService";
 import {Router} from "@angular/router";
+import {MessageService} from "primeng/api";
 
 @Component({
     templateUrl: './survey-form.component.html',
@@ -22,6 +23,7 @@ export class SurveyFormComponent implements OnInit {
     };
 
     constructor(private surveyService: SurveyService,
+                private messageService: MessageService,
                 private router: Router) {
     }
 
@@ -60,8 +62,14 @@ export class SurveyFormComponent implements OnInit {
         this.surveyService.createSurvey(this.survey.title, this.survey.description, this.survey.expiresAt.toISOString(), this.survey.options)
             .then((survey) => {
                 this.survey = null;
-                this.router.navigate([`/`]);
-            })
+                this.router.navigate([`/survey`]);
+            }, (error) => {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Erro',
+                    detail: 'Erro ao criar enquete',
+                });
+            });
     }
 
     private updateSurvey() {
@@ -78,7 +86,13 @@ export class SurveyFormComponent implements OnInit {
         this.surveyService.updateSurveyById(this.survey.id, this.survey.title, this.survey.description, this.survey.expiresAt.toISOString(), this.survey.options)
             .then((survey) => {
                 this.survey = null;
-                this.router.navigate([`/`]);
+                this.router.navigate([`/survey`]);
+            }, (error) => {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Erro',
+                    detail: 'Erro ao atualizar enquete',
+                });
             })
     }
 
@@ -88,6 +102,11 @@ export class SurveyFormComponent implements OnInit {
             this.survey.description.trim() === '' ||
             this.survey.expiresAt === null ||
             this.survey.options.length < 2) {
+            this.messageService.add({
+                severity: 'error',
+                summary: 'Erro',
+                detail: 'Preencha todos os campos',
+            });
             return;
         }
 

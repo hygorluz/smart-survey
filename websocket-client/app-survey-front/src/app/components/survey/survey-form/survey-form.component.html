@@ -1,35 +1,48 @@
+<p-toast></p-toast>
 <div class="" styleClass="p-fluid" *ngIf="!isLoading">
     <div class="card grid">
         <div class="col-6">
 
-            <h3>Survey</h3>
+            <h2>{{ survey.id ? 'Editar' : 'Nova' }} Enquete</h2>
             <div class="field">
                 <label for="title" class="block">Título</label>
-                <input id="title" type="text" pInputText [(ngModel)]="survey.title"
+                <input id="title" style="width: 435px"
+                       type="text"
+                       pInputText
+                       [(ngModel)]="survey.title"
                        placeholder="Digite o título da enquete"/>
                 <small class="p-error block" *ngIf="isSubmitted && !survey.title">Título é obrigatório</small>
             </div>
-
             <div class="field">
                 <label for="description" class="block">Descrição</label>
-                <input id="description" type="text" pInputText [(ngModel)]="survey.description"
-                       placeholder="Digite a descrição da enquete"/>
+                <textarea id="description" style="width: 435px"
+                          pInputTextarea
+                          [(ngModel)]="survey.description"
+                          rows="5"
+                            placeholder="Digite a descrição da enquete"
+                          [autoResize]="true"></textarea>
                 <small class="p-error block" *ngIf="isSubmitted && !survey.description">Descrição é obrigatório</small>
             </div>
             <div class="field">
                 <label for="expiresAt" class="block">Expira em</label>
                 <p-calendar id="expiresAt" [(ngModel)]="survey.expiresAt" showIcon="true" locale="pt-BR"
                             dateFormat="dd/mm/yy" placeholder="Data de expiração"></p-calendar>
-                <small class="p-error block" *ngIf="isSubmitted && !survey.expiresAt">Data de expiração é obrigatório</small>
+                <small class="p-error block" *ngIf="isSubmitted && !survey.expiresAt">Data de expiração é
+                    obrigatório</small>
             </div>
+
         </div>
 
         <div class="col-6">
-            <h3>Opções de Voto</h3>
+            <label for="opcao" class="block">Opção</label>
+            <input class="mr-1" id="opcao" type="text" pInputText [(ngModel)]="newOption" placeholder="Digite a opção"/>
+<!--            Botao com icone de mais-->
 
-            <input id="option" type="text" pInputText [(ngModel)]="newOption" placeholder="Digite a opção"/>
-            <button class="mt-2" type="button" (click)="addOption()" pButton pButton="text">Adicionar Opção</button>
-            <small class="p-error block" *ngIf="isSubmitted && !survey.options.length">Adicione pelo menos duas opções</small>
+            <button type="button" (click)="addOption()" pButton pButton="text" pRipple icon="pi pi-plus" label="Adicionar">
+            </button>
+
+            <small class="p-error block" *ngIf="isSubmitted && !survey.options.length">Adicione pelo menos duas
+                opções</small>
 
             <p-table [value]="survey.options">
                 <ng-template pTemplate="header">
@@ -45,8 +58,7 @@
                         <td>{{ option.title }}</td>
                         <td>{{ option.votes }}</td>
                         <td>
-                            <button type="button" (click)="removeOption(option)" pButton pButton="text">
-                                <i class="pi pi-trash"></i>
+                            <button type="button" (click)="removeOption(option)" pButton pButton="text" pRipple icon="pi pi-trash">
                             </button>
                         </td>
                     </tr>
@@ -56,8 +68,8 @@
         </div>
     </div>
 
-
-    <button type="button" (click)="createOrUpdateSurvey()" pButton pButton="primary">Salvar Enquete</button>
+    <button type="button" (click)="createOrUpdateSurvey()" pButton pButton="raised" pRipple label="Salvar" icon="pi pi-save"
+            class="mt-2"></button>
 </div>
 
 <div class="loading" *ngIf="isLoading">

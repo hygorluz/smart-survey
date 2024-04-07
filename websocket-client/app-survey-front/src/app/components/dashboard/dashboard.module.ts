@@ -17,11 +17,6 @@ import {ToastModule} from "primeng/toast";
         CommonModule,
         HttpClientModule,
         FormsModule,
-        TableModule,
-        InputTextModule,
-        ButtonModule,
-        ConfirmDialogModule,
-        ToastModule,
     ],
     declarations: [DashboardComponent],
 })

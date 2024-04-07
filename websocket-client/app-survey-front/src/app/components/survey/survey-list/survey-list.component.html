@@ -1,0 +1,91 @@
+<p-toast></p-toast>
+
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <h3>Enquetes</h3>
+            <div class="flex flex-row-reverse flex-wrap">
+                <div class="flex align-items-center justify-content-center m-2">
+                    <button pButton type="button" label="Criar Enquete" icon="pi pi-plus" class="p-button-success"
+                            (click)="navigateToSurveyCreate()"></button>
+                </div>
+            </div>
+            <p-table #dt1
+                     [value]="surveys"
+                     dataKey="id"
+                     [rows]="10"
+                     [loading]="loading"
+                     [rowHover]="true"
+                     [tableStyle]="{'min-width': '75rem'}"
+                     [paginator]="true"
+                     [globalFilterFields]="['title','description']"
+                     responsiveLayout="scroll">
+
+                <ng-template pTemplate="caption">
+                    <div class="flex justify-content-between flex-column sm:flex-row">
+                        <button pButton label="Limpar" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+                                (click)="clear(dt1)"></button>
+                        <span class="p-input-icon-left mb-2">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)"
+                                   placeholder="Pesquisar" class="w-full"/>
+                        </span>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="title" style="min-width:15rem">Title
+                            <p-sortIcon field="title"></p-sortIcon>
+                        </th>
+
+                        <th pSortableColumn="description" style="min-width: 15rem">Description
+                            <p-sortIcon field="description"></p-sortIcon>
+                        </th>
+
+                        <th pSortableColumn="expiresAt" style="min-width: 6rem">
+                            <div class="flex justify-content-between align-items-center">
+                                ExpiresAt
+                                <p-sortIcon field="expiresAt"></p-sortIcon>
+                            </div>
+                        </th>
+
+                        <th pSortableColumn="createdAt" style="min-width: 6rem">
+                            <div class="flex justify-content-between align-items-center">
+                                CreatedAt
+                                <p-sortIcon field="createdAt"></p-sortIcon>
+                            </div>
+                        </th>
+
+                        <th style="width: 10rem">Actions</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-survey>
+                    <tr>
+                        <td>
+                            {{ survey.title }}
+                        </td>
+                        <td>
+                            {{ survey.description }}
+                        </td>
+                        <td>
+                            {{ survey.expiresAt | date: 'dd/MM/yyyy' }}
+                        </td>
+                        <td>
+                            {{ survey.createdAt | date: 'dd/MM/yyyy' }}
+                        </td>
+                        <td>
+                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                                    (click)="navigateToSurveyEdit(survey.id)"></button>
+                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                                    (click)="deleteSurvey(survey.id)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+    </div>
+</div>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

@@ -2,6 +2,7 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AppLayoutComponent } from './layout/app.layout.component';
+import {SurveyModule} from "./components/survey/survey.module";
 
 @NgModule({
     imports: [
@@ -22,8 +23,8 @@ import { AppLayoutComponent } from './layout/app.layout.component';
                             path: 'survey',
                             loadChildren: () =>
                                 import(
-                                    './components/survey/survey-form/survey-form.module'
-                                ).then((m) => m.SurveyFormModule),
+                                    './components/survey/survey.module'
+                                ).then((m) => m.SurveyModule),
                         },
                         {
                             path: 'pages',

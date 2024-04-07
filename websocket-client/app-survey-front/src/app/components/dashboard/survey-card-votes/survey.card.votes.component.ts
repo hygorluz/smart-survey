@@ -41,6 +41,10 @@ export class SurveyCardVotesComponent {
     }
 
     vote(id?: string, title?: string): void {
+        if (!this.canVote()) {
+            this.messageService.add({severity: 'error', summary: 'Error', detail: 'Enquete já votada'});
+            return;
+        }
         let option = this.survey.options.find(option => {
             if (id) {
                 return option.id === id;
@@ -53,8 +57,12 @@ export class SurveyCardVotesComponent {
             return;
         }
         this.voted = true;
+        // set local storage to prevent voting again
+        localStorage.setItem(this.survey.id, 'true');
         this.onVote.emit(option);
     }
 
-    protected readonly Date = Date;
+    canVote(): boolean {
+        return !this.voted && !localStorage.getItem(this.survey.id);
+    }
 }

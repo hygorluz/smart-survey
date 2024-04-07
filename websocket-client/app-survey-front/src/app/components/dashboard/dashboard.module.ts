@@ -8,6 +8,7 @@ import {SurveyCardVotesComponent} from "./survey-card-votes/survey.card.votes.co
 import {ButtonModule} from "primeng/button";
 import {CarouselModule} from "primeng/carousel";
 import {TagModule} from "primeng/tag";
+import {ToastModule} from "primeng/toast";
 
 @NgModule({
     imports: [
@@ -18,6 +19,7 @@ import {TagModule} from "primeng/tag";
         ButtonModule,
         CarouselModule,
         TagModule,
+        ToastModule,
     ],
     declarations: [DashboardComponent, SurveyCardVotesComponent],
 })

@@ -22,12 +22,12 @@ export class DashboardComponent implements OnInit {
         console.log(survey, $event);
         this.surveyService.voteSurveyById(survey.id, $event.id).then(
             () => {
-                this.messageService.add({severity: 'success', summary: 'Success', detail: 'Vote submitted'});
+                this.messageService.add({severity: 'success', summary: 'Success', detail: 'Voto computado com sucesso'});
                 this.loadSurveys();
             },
             error => {
                 console.error(error);
-                this.messageService.add({severity: 'error', summary: 'Error', detail: 'Error submitting vote'});
+                this.messageService.add({severity: 'error', summary: 'Error', detail: 'Erro ao computar voto'});
             });
     }
 
@@ -41,7 +41,7 @@ export class DashboardComponent implements OnInit {
             },
             error => {
                 console.error(error);
-                this.messageService.add({severity: 'error', summary: 'Error', detail: 'Error loading surveys'});
+                this.messageService.add({severity: 'error', summary: 'Error', detail: 'Erro ao carregar enquetes'});
             });
     }
 }

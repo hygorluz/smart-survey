@@ -133,7 +133,7 @@ export class SurveyService {
         }
     }
 
-    async updateSurveyById(id: string, title: string, description: string, expiresAt: string, options: { title: string }[]): Promise<Survey> {
+    async updateSurveyById(id: string, title: string, description: string, expiresAt: string, options?: { title: string }[]): Promise<Survey> {
         try {
             const result = await this.apolloClient.mutate({
                 mutation: gql`
@@ -146,7 +146,9 @@ export class SurveyService {
                             title
                             updatedAt
                             options {
+                                id
                                 title
+                                votes
                             }
                         }
                     }
@@ -157,6 +159,36 @@ export class SurveyService {
             return result.data.updateSurveyById;
         } catch (error) {
             console.error('Error updating survey:', error);
+            throw error;
+        }
+    }
+
+    async voteSurveyById(surveyId: string, optionId: string): Promise<Survey> {
+        try {
+            const result = await this.apolloClient.mutate({
+                mutation: gql`
+                mutation VoteSurveyById($surveyId: String!, $optionId: String!) {
+                    voteSurveyById(id: $surveyId, optionId: $optionId) {
+                        id
+                        expiresAt
+                        description
+                        createdAt
+                        title
+                        updatedAt
+                        options {
+                            id
+                            title
+                            votes
+                        }
+                    }
+                }
+            `,
+                variables: {surveyId, optionId},
+            });
+
+            return result.data.voteSurveyById;
+        } catch (error) {
+            console.error('Error voting on survey:', error);
             throw error;
         }
     }

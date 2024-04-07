@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Option} from 'src/app/interfaces/Option';
-import {Survey} from 'src/app/interfaces/Survey';
+import {Option, Survey} from 'src/app/interfaces/Survey';
 import {SurveyService} from "../../services/SurveyService";
 import {Router} from "@angular/router";
 import {MessageService} from "primeng/api";
@@ -83,7 +82,7 @@ export class SurveyFormComponent implements OnInit {
                 delete option.votes;
             });
         }
-        this.surveyService.updateSurveyById(this.survey.id, this.survey.title, this.survey.description, this.survey.expiresAt.toISOString(), this.survey.options)
+        this.surveyService.updateSurveyById(this.survey.id, this.survey.title, this.survey.description, this.survey.expiresAt.toISOString())
             .then((survey) => {
                 this.survey = null;
                 this.router.navigate([`/survey`]);

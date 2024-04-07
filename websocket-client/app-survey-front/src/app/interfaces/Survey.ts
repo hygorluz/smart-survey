@@ -12,5 +12,7 @@ export interface Survey {
 export interface Option {
     id?: string;
     title: string;
+    // Transient property
+    percentage?: number;
     votes?: number;
 }

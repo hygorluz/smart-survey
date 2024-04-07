@@ -1,0 +1,10 @@
+<div class="grid p-justify-center">
+    <div *ngFor="let survey of avaiableSurveys">
+        <div class="p-col-12 mr-6" style="width: 50rem">
+            <survey-card-votes
+                [survey]="survey"
+                (onVote)="onVote(survey, $event)"
+            ></survey-card-votes>
+        </div>
+    </div>
+</div>

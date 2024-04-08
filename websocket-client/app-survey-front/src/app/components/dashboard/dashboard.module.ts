@@ -9,6 +9,7 @@ import {ButtonModule} from "primeng/button";
 import {CarouselModule} from "primeng/carousel";
 import {TagModule} from "primeng/tag";
 import {ToastModule} from "primeng/toast";
+import {ProgressSpinnerModule} from "primeng/progressspinner";
 
 @NgModule({
     imports: [
@@ -20,6 +21,7 @@ import {ToastModule} from "primeng/toast";
         CarouselModule,
         TagModule,
         ToastModule,
+        ProgressSpinnerModule,
     ],
     declarations: [DashboardComponent, SurveyCardVotesComponent],
 })

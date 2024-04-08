@@ -1,4 +1,4 @@
-<div class="grid p-justify-center">
+<div class="grid p-justify-center" *ngIf="avaiableSurveys?.length > 0 && !isLoading">
     <div *ngFor="let survey of avaiableSurveys">
         <div class="p-col-12 mr-6" style="width: 50rem">
             <survey-card-votes
@@ -7,4 +7,13 @@
             ></survey-card-votes>
         </div>
     </div>
+</div>
+
+<div class="grid p-justify-center" *ngIf="avaiableSurveys?.length === 0 && !isLoading">
+    <p>Sem enquetes disponíveis</p>
+</div>
+
+<div class="loading p-justify-center"
+     *ngIf="isLoading">
+    <p-progressSpinner></p-progressSpinner>
 </div>

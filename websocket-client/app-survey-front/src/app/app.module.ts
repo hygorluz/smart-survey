@@ -6,6 +6,7 @@ import { AppLayoutModule } from './layout/app.layout.module';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import {SurveyService} from "./components/services/SurveyService";
 import {ConfirmationService, MessageService} from "primeng/api";
+import {SocketService} from "./components/services/SocketService";
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
@@ -13,6 +14,7 @@ import {ConfirmationService, MessageService} from "primeng/api";
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         SurveyService,
+        SocketService,
         ConfirmationService,
         MessageService,
     ],

@@ -42,7 +42,7 @@ export class SurveyCardVotesComponent {
 
     vote(id?: string, title?: string): void {
         if (!this.canVote()) {
-            this.messageService.add({severity: 'error', summary: 'Error', detail: 'Enquete já votada'});
+            this.messageService.add({severity: 'error', summary: 'Error', detail: 'Enquete já votada (apagar local storage para votar novamente)'});
             return;
         }
         let option = this.survey.options.find(option => {

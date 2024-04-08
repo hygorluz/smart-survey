@@ -23,13 +23,11 @@ export class DashboardComponent implements OnInit {
         this.isLoading = true;
         this.socket.on('surveys status', (data) => {
             this.isLoading = false;
-            console.log('Received data:', data);
             this.avaiableSurveys = this.filterSurveys(data);
         });
     }
 
     onVote(survey: Survey, $event: Option) {
-        console.log(survey, $event);
         this.surveyService.voteSurveyById(survey.id, $event.id).then(
             () => {
                 this.messageService.add({severity: 'success', summary: 'Success', detail: 'Voto computado com sucesso'});

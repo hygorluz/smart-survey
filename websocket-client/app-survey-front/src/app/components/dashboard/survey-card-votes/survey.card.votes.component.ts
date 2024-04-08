@@ -22,7 +22,6 @@ export class SurveyCardVotesComponent {
         if (this._survey !== survey) {
             this._survey = survey;
             this.totalVotes = this.survey.options.reduce((acc, option) => acc + Number(option.votes), 0);
-            console.log(this._survey);
         }
     }
 
